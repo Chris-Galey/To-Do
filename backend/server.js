@@ -1,61 +1,36 @@
 const express = require("express");
-
 const mongoose = require("mongoose");
+const cors = require("cors");
+const toDoRoutes = require("./routes");
 const app = express();
-const port = 3000;
-app.use(express.json());
+const port = 3001;
+
+//CORS enabled
+app.use(cors({ origin: "http://localhost:3002" }));
+
 // DATABASE
 const uri =
-  "mongodb+srv://galey:<pass>@cluster0.r4zl66m.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://galey:whitepine@cluster0.r4zl66m.mongodb.net/?retryWrites=true&w=majority";
 
-main().catch((err) => console.log(err));
-
-async function main() {
+async function connectToDatabase() {
   try {
-    await mongoose.connect(uri);
-  } catch (err) {
-    console.log(err);
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB", error);
   }
 }
+connectToDatabase();
 
-// MODEL
-const { Schema } = mongoose;
+// MIDDLEWARE
+app.use(express.json());
+app.use("/", toDoRoutes);
 
-const TaskSchema = new Schema({
-  title: String,
-  description: String,
-  status: Boolean,
-});
-
-const Task = mongoose.model("Task", TaskSchema);
-
-//ROUTES
-app
-  .route("/")
-  .get(async (req, res) => {
-    const tasks = await Task.find();
-    res.send(tasks);
-  })
-  .post(async (req, res) => {
-    const task = new Task(req.body);
-    await task.save();
-    res.send(task);
-  })
-  .delete(async (req, res) => {
-    const task = await Task.deleteMany();
-    res.send(task);
-  });
-
-app
-  .route("/:id")
-
-  .put((req, res) => {
-    app.send("Update Task");
-  })
-  .delete((res, req) => {
-    app.send("delete Task");
-  });
-
+// SERVER
 app.listen(port, () => {
   console.log(`This server is running on port ${port}`);
 });
