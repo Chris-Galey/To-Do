@@ -4,9 +4,9 @@ const { Schema } = mongoose;
 const TaskSchema = new Schema({
   title: String,
   description: String,
-  status: Boolean,
+  status: { type: Boolean, default: false, required: true },
 });
 
 const Task = mongoose.model("Task", TaskSchema);
 
-module.exports = { Task };
+module.exports = Task;

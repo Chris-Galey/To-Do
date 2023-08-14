@@ -3,10 +3,18 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const toDoRoutes = require("./routes");
 const app = express();
-const port = 3001;
+const port = 5000;
 
 //CORS enabled
-app.use(cors({ origin: "http://localhost:3002" }));
+// app.use(cors({ origin: "http://localhost:3000" }));
+// app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000", // Replace with your React app's URL
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+};
+
+app.use(cors(corsOptions));
+app.use(express.json());
 
 // DATABASE
 const uri =
@@ -27,7 +35,6 @@ async function connectToDatabase() {
 connectToDatabase();
 
 // MIDDLEWARE
-app.use(express.json());
 app.use("/", toDoRoutes);
 
 // SERVER
