@@ -6,29 +6,36 @@ import * as api from "./api";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [render, setRender] = useState(0);
 
-  const triggerRender = () => {
-    setRender(render + 1);
+  const getTasks = async () => {
+    const tasksFromServer = await api.getTasks();
+    setTasks(tasksFromServer);
   };
+  getTasks();
 
-  useEffect(() => {
-    const getTasks = async () => {
-      const tasksFromServer = await api.getTasks();
-      setTasks(tasksFromServer);
-    };
-    getTasks();
-  }, [tasks, render]);
+  const handleDeleteTask = async (id) => {
+    await api.deleteTask(id);
+  };
+  const handleUpdateTask = async (id, title, desc) => {
+    await api.updateTask(id, title, desc);
+  };
 
   return (
     <div className={styles.app}>
       <header className={styles.header}>FullStack To-Do Application</header>
       <main className={styles.main}>
-        <AddTask triggerRender={triggerRender} />
-        <Task tasks={tasks} />
-        <button className={styles.btn__delete_all} onClick={api.deleteAllTasks}>
-          Delete All
-        </button>
+        <AddTask />
+        {tasks.map((task) => {
+          return (
+            <Task
+              key={task._id}
+              tasks={task}
+              onDelete={handleDeleteTask}
+              onUpdate={handleUpdateTask}
+            />
+          );
+        })}
+        <button className={styles.btn__delete_all}>Delete All</button>
       </main>
     </div>
   );

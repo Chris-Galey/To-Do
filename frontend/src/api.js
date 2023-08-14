@@ -31,14 +31,14 @@ export const deleteTask = async (id) => {
     console.log(error);
   }
 };
-export const updateTask = async (id, status) => {
+export const updateTask = async (id, title, description) => {
   try {
     await fetch(`http://localhost:5000/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status }),
+      body: JSON.stringify({ id, title, description }),
     });
   } catch (error) {
     console.log(error);

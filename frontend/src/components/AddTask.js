@@ -2,7 +2,7 @@ import * as api from "../api";
 import styles from "./AddTask.module.css";
 import { useState } from "react";
 
-export default function AddTask({ triggerRender }) {
+export default function AddTask() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -11,7 +11,6 @@ export default function AddTask({ triggerRender }) {
     api.addTask(title, description);
     setTitle("");
     setDescription("");
-    triggerRender();
   };
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
