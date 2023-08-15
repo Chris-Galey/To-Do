@@ -9,14 +9,14 @@ export const getTasks = async () => {
     console.log(error);
   }
 };
-export const addTask = async (title, description) => {
+export const addTask = async (description) => {
   try {
     await fetch("http://localhost:5000/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, description }),
+      body: JSON.stringify({ description }),
     });
   } catch (error) {
     console.log(error);
@@ -31,14 +31,14 @@ export const deleteTask = async (id) => {
     console.log(error);
   }
 };
-export const updateTask = async (id, title, description) => {
+export const updateTask = async (id, description) => {
   try {
     await fetch(`http://localhost:5000/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id, title, description }),
+      body: JSON.stringify({ id, description }),
     });
   } catch (error) {
     console.log(error);

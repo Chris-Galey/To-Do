@@ -1,8 +1,33 @@
 .task {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 2px white solid;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+.task__description {
+  flex: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.description__input {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 1.5rem;
+  color: white;
+  background-color: #282c34;
+}
+.task__footer {
+  flex: 1;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  width: 100%;
+  gap: 0.5rem;
 }
