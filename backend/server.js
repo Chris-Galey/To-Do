@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 const toDoRoutes = require("./routes");
 const app = express();
 const port = 5000;
+const db = process.env.DB_PASS;
 
 //CORS enabled
 // app.use(cors({ origin: "http://localhost:3000" }));
@@ -17,8 +19,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // DATABASE
-const uri =
-  "mongodb+srv://galey:whitepine@cluster0.r4zl66m.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://galey:${db}@cluster0.r4zl66m.mongodb.net/?retryWrites=true&w=majority`;
 
 async function connectToDatabase() {
   try {

@@ -21,10 +21,8 @@ export default function AddTask({ addTask }) {
           onChange={(e) => setDescription(e.target.value)}
         />
       </form>
-      <div>
-        <button onClick={handleSubmit} className={styles.addTask__button}>
-          Add Task
-        </button>
+      <div className={styles.button}>
+        <button onClick={handleSubmit}>Add Task</button>
       </div>
     </div>
   );

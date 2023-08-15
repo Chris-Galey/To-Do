@@ -4,8 +4,8 @@ import { useState } from "react";
 export default function Task({ tasks, onDelete, onUpdate }) {
   const [edit, setEdit] = useState(false);
 
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState(false);
+  const [description, setDescription] = useState(tasks.description);
+  const [status, setStatus] = useState(tasks.status);
   console.log(edit, status);
 
   const handleUpdate = () => {
@@ -20,7 +20,7 @@ export default function Task({ tasks, onDelete, onUpdate }) {
           <input
             type="text"
             className={styles.description__input}
-            value={tasks.description}
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
@@ -31,32 +31,23 @@ export default function Task({ tasks, onDelete, onUpdate }) {
       )}
 
       <div className={styles.task__footer}>
-        <button
-          className={styles.task__button}
-          onClick={() => setStatus(!status)}
-        >
-          {status ? "Uncheck" : "Check"}
-        </button>
-
         {edit ? (
-          <button className={styles.task__button} onClick={handleUpdate}>
-            Save
-          </button>
+          <>
+            <button onClick={() => setStatus(!status)}>
+              {status ? "Uncheck" : "Check"}
+            </button>
+            <button onClick={handleUpdate}>Save</button>
+          </>
         ) : (
-          <button
-            className={styles.task__button}
-            onClick={() => setEdit(!edit)}
-          >
-            Edit
-          </button>
+          <>
+            <button className={styles.task__button}>
+              {status ? "Uncheck" : "Check"}
+            </button>
+            <button onClick={() => setEdit(!edit)}>Edit</button>
+          </>
         )}
 
-        <button
-          className={styles.task__button}
-          onClick={() => onDelete(tasks._id)}
-        >
-          Delete
-        </button>
+        <button onClick={() => onDelete(tasks._id)}>Delete</button>
       </div>
     </div>
   );
